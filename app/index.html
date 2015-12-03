@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html ng-app="myApp">
 <!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
@@ -6,33 +6,70 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>My AngularJS App</title>
+  <title>File_upload</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/normalize.css">
   <link rel="stylesheet" href="bower_components/html5-boilerplate/dist/css/main.css">
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css">
   <link rel="stylesheet" href="app.css">
   <script src="bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
-  <ul class="menu">
-    <li><a href="#/view1">view1</a></li>
-    <li><a href="#/view2">view2</a></li>
-  </ul>
+<body layout="column" ng-controller="AppController as vm">
+<md-toolbar layout="row">
+    <div class="md-toolbar-tools">
+        <md-button ng-click="vm.toggleSidenav('left')" hide-gt-sm class="md-icon-button">
+            <md-icon aria-label="Menu" md-svg-icon="https://s3-us-west-2.amazonaws.com/s.cdpn.io/68133/menu.svg">
+            </md-icon>
+        </md-button>
+        <h1>File_upload </h1>
+    </div>
+</md-toolbar>
+<div layout="row" flex ng-controller="SidebarController as side">
+    <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
+        <md-button ng-click="side.setTab(1)" class="md-accent" >View</md-button>
+        <md-button ng-click="side.setTab(2)" class="md-accent" >Upload</md-button>
+    </md-sidenav>
+    <div layout="column" flex id="content">
+        <md-content ng-show="side.isSet(1)" layout="row" flex class="md-padding" layout-wrap layout-padding layout-margin ng-controller="ViewController as viewCtrl">
+            <div flex="25" ng-repeat="photo in viewCtrl.photos">
+                <md-card layout-padding layout-margin >
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{photo.title}}</span>
+                            <span class="md-subhead">{{photo.uploadDate | date:'short'}}</span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media">
+                                <img ng-src="{{photo.path}}">{{photo.fileName}}</img>
+                            </div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button>placeholder</md-button>
+                        <md-button>buttons</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-content>
 
-  <div ng-view></div>
 
-  <div>Angular seed app: v<span app-version></span></div>
+        <md-content ng-show="side.isSet(2)" layout="column" flex class="md-padding" ng-controller="UploadController as uploadCtrl">
+            Content for upload tab
+        </md-content>
+
+    </div>
+</div>
 
   <!-- In production use:
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-aria/angular-aria.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/angular-material/angular-material.min.js"></script>
   <script src="app.js"></script>
   <script src="view1/view1.js"></script>
   <script src="view2/view2.js"></script>
