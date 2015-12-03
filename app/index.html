@@ -28,11 +28,15 @@
 <div layout="row" flex ng-controller="SidebarController as side">
     <md-sidenav layout="column" class="md-sidenav-left md-whiteframe-4dp" md-component-id="left" md-is-locked-open="$mdMedia('gt-sm')">
 
-        <md-button ng-click="side.setTab(1)" class="md-accent" >View</md-button>
-        <md-button ng-click="side.setTab(2)" class="md-accent" >Upload</md-button>
+        <md-button ng-click="side.setTab(1)" class="md-accent" >View Images</md-button>
+        <md-button ng-click="side.setTab(2)" class="md-accent" >View Videos</md-button>
+        <md-button ng-click="side.setTab(3)" class="md-accent" >Upload</md-button>
+
     </md-sidenav>
     <div layout="column" flex id="content">
-        <md-content ng-show="side.isSet(1)" layout="row" flex class="md-padding" layout-wrap layout-padding layout-margin ng-controller="ViewController as viewCtrl">
+
+
+        <md-content ng-show="side.isSet(1)" layout="row" flex class="md-padding" layout-wrap layout-padding layout-margin ng-controller="ViewImageController as viewCtrl">
             <div flex="25" ng-repeat="photo in viewCtrl.photos">
                 <md-card layout-padding layout-margin >
                     <md-card-title>
@@ -54,9 +58,31 @@
             </div>
         </md-content>
 
+        <md-content ng-show="side.isSet(2)" layout="row" flex class="md-padding" layout-wrap layout-padding layout-margin ng-controller="ViewVideoController as viewCtrl">
+            <div flex="25" ng-repeat="video in viewCtrl.videos">
+                <md-card layout-padding layout-margin >
+                    <md-card-title>
+                        <md-card-title-text>
+                            <span class="md-headline">{{video.title}}</span>
+                            <span class="md-subhead">{{video.uploadDate | date:'short'}}</span>
+                        </md-card-title-text>
+                        <md-card-title-media>
+                            <div class="md-media-lg card-media">
+                                <video width="100%" src="{{video.path}}" controls></video>
+                            </div>
+                        </md-card-title-media>
+                    </md-card-title>
+                    <md-card-actions layout="row" layout-align="end center">
+                        <md-button>placeholder</md-button>
+                        <md-button>buttons</md-button>
+                    </md-card-actions>
+                </md-card>
+            </div>
+        </md-content>
 
-        <md-content ng-show="side.isSet(2)" layout="column" flex class="md-padding" ng-controller="UploadController as uploadCtrl">
-            Content for upload tab
+
+        <md-content ng-show="side.isSet(3)" layout="column" flex class="md-padding" ng-controller="UploadController as uploadCtrl">
+            Content for upload tab {{side.tab}}
         </md-content>
 
     </div>
@@ -66,13 +92,13 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
   <script src="bower_components/angular/angular.js"></script>
+
   <script src="bower_components/angular-animate/angular-animate.js"></script>
   <script src="bower_components/angular-aria/angular-aria.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-material/angular-material.min.js"></script>
   <script src="app.js"></script>
-  <script src="view1/view1.js"></script>
-  <script src="view2/view2.js"></script>
+
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
