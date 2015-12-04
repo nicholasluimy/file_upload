@@ -2,7 +2,8 @@
 (function(){
 // Declare app level module which depends on views, and components
 var app = angular.module('myApp', [
-    'ngMaterial'
+    'ngMaterial',
+    'fileUpload'
 ]);
 
 app.controller('AppController', function($mdSidenav){
@@ -135,13 +136,6 @@ app.controller('ViewVideoController', function(){
         }
 
     ];
-});
-
-
-
-
-app.controller('UploadController', function(){
-
 });
 
 })();

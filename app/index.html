@@ -33,7 +33,6 @@
         <md-button ng-click="side.setTab(3)" class="md-accent" >Upload</md-button>
 
     </md-sidenav>
-    <div layout="column" flex id="content">
 
 
         <md-content ng-show="side.isSet(1)" layout="row" flex class="md-padding" layout-wrap layout-padding layout-margin ng-controller="ViewImageController as viewCtrl">
@@ -81,8 +80,49 @@
         </md-content>
 
 
-        <md-content ng-show="side.isSet(3)" layout="column" flex class="md-padding" ng-controller="UploadController as uploadCtrl">
-            Content for upload tab {{side.tab}}
+        <md-content ng-show="side.isSet(3)" layout="column" flex class="md-padding">
+            <!-- start tab 3 content -->
+            Upload on form submit or button click
+            <form ng-controller="MyCtrl" name="form">
+                Single Image with validations
+                <input type="file" ngf-select="" ng-model="file" name="file"
+                     accept="image/*,video/*" ngf-max-size="20MB" ngf-min-height="100"
+                     ngf-resize="{width: 100, height: 100}" required>
+                <br>
+                <img ngf-src="file" class="thumb">
+                <video ngf-src="file" class="thumb"></video>
+                img here
+                <br>
+                Select Multiple files
+                <input type="file" ngf-select ng-model="files" ngf-multiple="true">
+                <br>
+                <div ng-repeat="img in files">
+                    <img ngf-thumbnail="img" ngf-size="{width:100, height:100, quality:1}">
+                </div>
+                <br>
+                Select Drop files: <div ngf-drop ng-model="filesVid" class="drop-box" ngf-drag-over-class="'dragover'" ngf-multiple="true" ngf-allow-dir="true" accept="video/*,application/pdf" ngf-pattern="'video/*,application/pdf'">Drop</div>
+                <button type="submit" ng-click="submit()">submit</button>
+                <br>
+                <div ng-repeat="vid in filesVid">
+                    <video ngf-src="vid" class="thumb">
+                </div>
+            </form>
+
+            Upload right away after file selection:
+            <div class="button" ngf-select="upload($file)">Upload on file select</div>
+            <div class="button" ngf-select="uploadFiles($files)" multiple="multiple">Upload on file select</div>
+            Drop File:
+            <div ngf-drop="uploadFiles($files)" class="drop-box"
+                 ngf-drag-over-class="'dragover'" ngf-multiple="true"
+                 ngf-pattern="'image/*,application/pdf'">Drop Images or PDFs files here</div>
+            <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+
+            Image thumbnail: <img ngf-thumbnail="file || '/thumb.jpg'">
+            Audio preview: <audio controls ngf-src="file"></audio>
+            Video preview: <video controls ngf-src="file"></video>
+
+
+            <!-- end tab 3 content -->
         </md-content>
 
     </div>
@@ -98,7 +138,9 @@
   <script src="bower_components/angular-route/angular-route.js"></script>
   <script src="bower_components/angular-material/angular-material.min.js"></script>
   <script src="app.js"></script>
-
+<script src="upload.js"></script>
+<script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
+<script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
   <script src="components/version/version.js"></script>
   <script src="components/version/version-directive.js"></script>
   <script src="components/version/interpolate-filter.js"></script>
